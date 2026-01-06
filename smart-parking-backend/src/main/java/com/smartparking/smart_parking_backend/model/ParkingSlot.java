@@ -69,6 +69,7 @@ public class ParkingSlot {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private User owner;
 
     @com.fasterxml.jackson.annotation.JsonIgnore
