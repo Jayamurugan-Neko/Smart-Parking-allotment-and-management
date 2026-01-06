@@ -223,7 +223,21 @@ function AdminDashboard() {
                             <div className="slots-grid">
                                 {pendingSlots.length === 0 ? <p>No pending slots.</p> : pendingSlots.map(slot => (
                                     <div key={slot.id} className="slot-verify-card">
-                                        <img src={slot.imageUrl || "https://via.placeholder.com/150"} alt="Slot" />
+                                        {slot.imageUrl ? (
+                                            <img src={slot.imageUrl} alt="Slot" onError={(e) => e.target.src = "https://placehold.co/400x200?text=No+Image"} />
+                                        ) : (
+                                            <div style={{
+                                                width: '100%',
+                                                height: '200px',
+                                                background: '#eee',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: '#666'
+                                            }}>
+                                                <span>No Image Preview (API Key Required for Map)</span>
+                                            </div>
+                                        )}
                                         <div className="slot-info">
                                             <h4>{slot.address}, {slot.city}</h4>
                                             <p><strong>Owner:</strong> {slot.owner?.name}</p>
