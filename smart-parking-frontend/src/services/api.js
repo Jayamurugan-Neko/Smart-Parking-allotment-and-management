@@ -169,4 +169,14 @@ export const deleteUser = async (userId) => {
 };
 
 
+
+// -------------------------------
+// PAYMENT APIs (RAZORPAY)
+// -------------------------------
+export const createPaymentOrder = (bookingId) =>
+  API.post("/api/payment/create-order", { bookingId });
+
+export const verifyPaymentSignature = (data) =>
+  API.post("/api/payment/verify-payment", data);
+
 export default API;

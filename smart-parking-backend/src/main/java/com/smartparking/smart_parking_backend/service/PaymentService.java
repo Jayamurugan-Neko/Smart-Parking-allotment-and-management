@@ -39,8 +39,13 @@ public class PaymentService {
             RazorpayClient client = new RazorpayClient(keyId, keySecret);
 
             JSONObject orderRequest = new JSONObject();
-            // Amount in paise (multiply by 100)
-            orderRequest.put("amount", (int) (booking.getTotalPrice() * 100));
+            // Amount in paise (multiply by 100). Minimum amount for Razorpay is 100 paise
+            // (₹1).
+            int amountInPaise = (int) (booking.getTotalPrice() * 100);
+            if (amountInPaise < 100) {
+                amountInPaise = 100; // Enforce minimum ₹1
+            }
+            orderRequest.put("amount", amountInPaise);
             orderRequest.put("currency", "INR");
             orderRequest.put("receipt", "txn_" + bookingId);
 

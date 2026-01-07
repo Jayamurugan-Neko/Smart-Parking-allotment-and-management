@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { getMyBookings, getOwnerBookings, endBooking, payBooking } from "../services/api";
+import { getMyBookings, getOwnerBookings, endBooking } from "../services/api";
 import PaymentModal from "../components/PaymentModal";
 import "../styles/BookingsPage.css";
 import "../styles/common.css";
@@ -74,17 +74,10 @@ function BookingsPage() {
     const handlePaymentSuccess = async (paymentRef) => {
         if (!paymentBooking) return;
 
-        try {
-            // 1. Call the backend API to record the payment as COMPLETED, with UTR
-            await payBooking(paymentBooking.bookingId, paymentRef);
-            alert("Payment recorded successfully!");
-
-            // 2. Refresh the list so the status turns green ("Paid ✅")
-            fetchBookings();
-        } catch (err) {
-            console.error("Failed to record payment", err);
-            alert("Payment failed on server side, please contact support.");
-        }
+        // Payment verification is already done in the modal via Razorpay API
+        // We just need to notify user and refresh UI
+        alert("Payment successful! ID: " + paymentRef);
+        fetchBookings();
     };
 
     return (
