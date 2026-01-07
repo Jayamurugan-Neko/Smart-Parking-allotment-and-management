@@ -172,7 +172,7 @@ This guide will take you from "Zero" to "Live Production" using free tools: **Ti
 ## 1️⃣ Pre-Deployment Checklist
 Before deploying, ensure:
 *   [ ] **GitHub Repo**: Your project is pushed to GitHub.
-*   [ ] **Clean Code**: Remove any hardcoded passwords (like `Naruto@16`) from `application.properties` before committing, if possible. *We will inject them safely using Environment Variables.*
+*   [ ] **Clean Code**: Remove any hardcoded passwords (like `Your root DB password`) from `application.properties` before committing, if possible. *We will inject them safely using Environment Variables.*
 *   [ ] **Database Clean**: You don't need to migrate data manually; the backend will create tables automatically on the cloud database.
 
 ---
