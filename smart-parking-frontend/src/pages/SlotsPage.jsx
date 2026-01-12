@@ -6,6 +6,7 @@ import SlotCard from "../components/SlotCard";
 import { fetchSlotsForMap, fetchSlotAvailability } from "../services/slotService";
 import "../styles/SlotsPage.css";
 import "../styles/common.css";
+import ParkingLoader from "../components/ParkingLoader";
 
 
 function SlotsPage() {
@@ -92,8 +93,8 @@ function SlotsPage() {
 
   if (loading) {
     return (
-      <div className="slots-loading">
-        <div className="loading-spinner"></div>
+      <div className="slots-loading" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-color)' }}>
+        <ParkingLoader message="Finding parking spots..." />
       </div>
     );
   }

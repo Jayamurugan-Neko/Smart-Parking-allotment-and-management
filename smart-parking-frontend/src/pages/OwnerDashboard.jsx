@@ -3,6 +3,7 @@ import OwnerSlotCard from "../components/OwnerSlotCard";
 import { getOwnerSlots, createSlot, getOwnerSummary } from "../services/api";
 import "../styles/OwnerDashboard.css";
 import "../styles/common.css";
+import ParkingLoader from "../components/ParkingLoader";
 
 function OwnerDashboard() {
   const [user] = useState(() => {
@@ -67,9 +68,8 @@ function OwnerDashboard() {
 
   if (loading) {
     return (
-      <div className="owner-dashboard-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div className="loading-spinner"></div>
-        <span style={{ marginLeft: '12px', color: '#fff', fontSize: '18px' }}>Loading owner dashboard...</span>
+      <div className="owner-dashboard-container" style={{ minHeight: '80vh', display: 'flex' }}>
+        <ParkingLoader message="Loading owner dashboard..." />
       </div>
     );
   }

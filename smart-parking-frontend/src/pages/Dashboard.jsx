@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getMyProfile, updateMyProfile, getMyVehicles, createVehicle, deleteVehicle } from "../services/api";
 import "../styles/Dashboard.css";
 import "../styles/common.css";
+import ParkingLoader from "../components/ParkingLoader";
 
 function Dashboard() {
   const [vehicles, setVehicles] = useState([]);
@@ -248,8 +249,8 @@ function Dashboard() {
 
   if (loading) {
     return (
-      <div className="dashboard-container">
-        <div className="dashboard-loading">Loading profile...</div>
+      <div className="dashboard-container" style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <ParkingLoader message="Loading profile..." />
       </div>
     );
   }
