@@ -4,6 +4,7 @@ import PaymentModal from "../components/PaymentModal";
 import QRCodeModal from "../components/QRCodeModal";
 import "../styles/BookingsPage.css";
 import "../styles/common.css";
+import ParkingLoader from "../components/ParkingLoader";
 
 function BookingsPage() {
     const [bookings, setBookings] = useState([]);
