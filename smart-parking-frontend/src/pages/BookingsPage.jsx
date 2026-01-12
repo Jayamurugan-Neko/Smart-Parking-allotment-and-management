@@ -96,10 +96,6 @@ function BookingsPage() {
             <h2 className="bookings-page-title">
                 {userRole === "OWNER" ? "Incoming Bookings" : "My Bookings"}
             </h2>
-            import ParkingLoader from "../components/ParkingLoader";
-            // ... (imports)
-
-            // Inside render:
             {loading ? (
                 <ParkingLoader message="Loading your bookings..." />
             ) : bookings.length === 0 ? (
