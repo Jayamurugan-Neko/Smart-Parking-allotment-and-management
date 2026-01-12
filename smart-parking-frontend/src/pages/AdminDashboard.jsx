@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAdminStats, getOwnerPayouts, processPayout, getPendingSlots, verifySlot, getAdminProfile, updateAdminProfile, getAllUsers, deleteUser } from "../services/api";
 import "../styles/admin.css"; // We will create this next
+import ParkingLoader from "../components/ParkingLoader";
 
 function AdminDashboard() {
     const [activeTab, setActiveTab] = useState("overview");
@@ -108,7 +109,11 @@ function AdminDashboard() {
             </div>
 
             <div className="admin-content">
-                {loading ? <p>Loading...</p> : (
+                {loading ? (
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+                        <ParkingLoader message={`Loading ${activeTab}...`} />
+                    </div>
+                ) : (
                     <>
                         {/* OVERVIEW TAB */}
                         {activeTab === "overview" && stats && (
