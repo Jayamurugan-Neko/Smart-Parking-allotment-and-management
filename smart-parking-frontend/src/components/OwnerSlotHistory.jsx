@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { fetchOwnerSlotHistory } from "../services/slotService";
 
+/**
+ * OwnerSlotHistory Component
+ * 
+ * Purpose: A simple table visible to Owners that lists every single booking 
+ * ever made for their parking slots.
+ * Includes details like who booked it, what vehicle, and the exact times.
+ */
 function OwnerSlotHistory({ user }) {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);

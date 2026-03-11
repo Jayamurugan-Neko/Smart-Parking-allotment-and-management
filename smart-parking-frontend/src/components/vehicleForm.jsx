@@ -1,6 +1,12 @@
 import React, {useState} from "react";
 import { addVehicle } from "../services/api";
 
+/**
+ * VehicleForm Component
+ * 
+ * Purpose: A simple older form used to add a vehicle to a user's profile.
+ * Mostly replaced by the modern Dashboard forms, but kept for compatibility.
+ */
 function VehicleForm() 
 {
     const [vehicleNumber, setVehicleNumber] = useState("");

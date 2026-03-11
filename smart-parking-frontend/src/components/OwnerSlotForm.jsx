@@ -2,6 +2,16 @@ import { useState } from "react";
 import { updateSlotCapacity, enableSlot, disableSlot, updateSlotPrice, deleteSlot, updateSlotUpiId } from "../services/api";
 import "../styles/OwnerSlotForm.css";
 
+/**
+ * OwnerSlotForm Component
+ * 
+ * Purpose: A control panel for Slot Owners to manage a specific parking slot.
+ * It allows owners to:
+ * 1. Adjust capacity limits (e.g., increase number of car spots).
+ * 2. Change hourly pricing.
+ * 3. Add a UPI ID for receiving payments.
+ * 4. Temporarily Disable (close) the slot or permanently Delete it.
+ */
 function OwnerSlotForm({ slot, refreshSlots }) {
   const [car, setCar] = useState(slot.carCapacity);
   const [bike, setBike] = useState(slot.bikeCapacity);
@@ -9,6 +19,9 @@ function OwnerSlotForm({ slot, refreshSlots }) {
   const [message, setMessage] = useState("");
   const [messageType, setMessageType] = useState("");
 
+  // -------- ACTION HANDLERS --------
+
+  // Sends the new capacity numbers to the backend.
   const updateCapacity = async () => {
     try {
       await updateSlotCapacity(slot.id, car, bike, truck);
@@ -27,6 +40,7 @@ function OwnerSlotForm({ slot, refreshSlots }) {
   const [bikePrice, setBikePrice] = useState(slot.bikePricePerHour || 0);
   const [truckPrice, setTruckPrice] = useState(slot.truckPricePerHour || 0);
 
+  // Sends the new hourly prices to the backend.
   const updatePrice = async () => {
     try {
       await updateSlotPrice(slot.id, carPrice, bikePrice, truckPrice);
@@ -43,6 +57,7 @@ function OwnerSlotForm({ slot, refreshSlots }) {
 
   const [upiId, setUpiId] = useState(slot.upiId || "");
 
+  // Updates the UPI ID attached to this specific slot for payments.
   const updateUpi = async () => {
     try {
       await updateSlotUpiId(slot.id, upiId);
@@ -57,6 +72,7 @@ function OwnerSlotForm({ slot, refreshSlots }) {
     }
   };
 
+  // Turns the slot back ON so users can book it again.
   const handleEnable = async () => {
     try {
       await enableSlot(slot.id);
@@ -71,6 +87,7 @@ function OwnerSlotForm({ slot, refreshSlots }) {
     }
   };
 
+  // Temporarily closes the slot (e.g., for maintenance). Users can't see/book it.
   const handleDisable = async () => {
     try {
       await disableSlot(slot.id);
@@ -85,6 +102,7 @@ function OwnerSlotForm({ slot, refreshSlots }) {
     }
   };
 
+  // Permanently deletes the slot (only works if there are no active bookings).
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this parking slot? This action cannot be undone.")) {
       return;

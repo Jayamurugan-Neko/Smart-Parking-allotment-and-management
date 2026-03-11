@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { getMyBookings, endBooking } from "../services/api";
 
+/**
+ * BookingList Component
+ * 
+ * Purpose: An older, simpler version of the BookingsPage. 
+ * Kept for reference or simple views. Lists bookings and handles ending them.
+ */
 function BookingList() {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);

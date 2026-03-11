@@ -1,6 +1,12 @@
-/* Common Styles - Reusable across all pages */
+/**
+ * common.css
+ * 
+ * Purpose: Reusable utility classes used across multiple pages of the App.
+ * Instead of rewriting styles for every button, card, or form grid, we define 
+ * them here once (e.g., .btn-primary, .card) so any component can use them easily.
+ */
 
-/* Animations */
+/* Animations used for fading/sliding in elements smoothly */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -136,9 +142,13 @@
   background-color: var(--primary-hover);
 }
 
-/* Common Form Styles */
+/* =========================================================================
+   Common Form Styles 
+   Provides a responsive grid layout for input fields used in Login/Signup/Dashboard
+   ========================================================================= */
 .form-grid {
   display: grid;
+  /* Automatically fits as many 250px columns as possible, falling back to 1 fraction each */
   grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
   gap: 16px;
   margin-bottom: 20px;

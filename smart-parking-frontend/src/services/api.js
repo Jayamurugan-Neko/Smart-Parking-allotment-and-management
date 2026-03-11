@@ -1,22 +1,37 @@
 import axios from "axios";
 
+/**
+ * api.js (Axios Configuration)
+ * 
+ * Purpose: This file manages all outward network requests (API calls) that the Frontend makes to the Backend.
+ * It uses a library called `axios` which is a popular alternative to the standard browser `fetch()` API.
+ * Axios automatically converts JSON data and provides easier error handling.
+ */
+
 // -------------------------------
 // Central Axios Instance
 // -------------------------------
+// Here we create a special version of Axios tailored for our app.
+// Instead of typing "http://localhost:8080/api/..." every time, we set a baseURL.
+// Now we can just say `API.get("/api/slots")`.
 const API = axios.create({
   baseURL: process.env.REACT_APP_API_URL || "http://localhost:8080"
 });
 
 // -------------------------------
-// Attach JWT Automatically
+// Attach JWT Automatically (The Interceptor)
 // -------------------------------
+// An "interceptor" acts like a toll booth. EVERY single request sent through `API` stops here first.
+// This code looks into localStorage for the 'token' (the JWT from login). 
+// If it finds one, it silently attaches it as a "Bearer Token" in the HTTP Authorization Header.
+// This saves us from manually injecting the token into all 30+ separate API calls below!
 API.interceptors.request.use(
   config => {
     const token = localStorage.getItem("token");
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`; // Adds the VIP pass to the request
     }
-    return config;
+    return config; // Sends the request on its way to the backend server
   },
   error => Promise.reject(error)
 );

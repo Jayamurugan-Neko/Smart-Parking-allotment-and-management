@@ -1,5 +1,6 @@
 package com.smartparking.smart_parking_backend.repository;
 
+// Importing necessary models and Spring Data annotations
 import com.smartparking.smart_parking_backend.model.Booking;
 import com.smartparking.smart_parking_backend.model.ParkingSlot;
 import com.smartparking.smart_parking_backend.model.VehicleType;
@@ -8,48 +9,88 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+// Utility classes for handling lists and optional (potentially null) values
 import java.util.Optional;
 import java.util.List;
 
+/**
+ * BookingRepository Interface
+ * 
+ * Purpose: This interface acts as the bridge (Data Access Layer) between the Java application and the database for 'Booking' entities.
+ * 
+ * Key Concept:
+ * - By extending JpaRepository<Booking, Long>, Spring Boot automatically implements standard database operations for us like:
+ *   save(), findAll(), findById(), deleteById(). We don't have to write any SQL for these basic tasks!
+ */
 public interface BookingRepository extends JpaRepository<Booking, Long> {
-        // User Side
-        Optional<Booking> findByParkingSlotAndActiveTrue(ParkingSlot parkingSlot);
+    
+    // ==========================================
+    // USER SIDE QUERIES
+    // ==========================================
 
-        List<Booking> findByUser(User user);
+    /**
+     * Finds an active booking for a specific parking slot.
+     * Spring magically generates the SQL query just by parsing the method name "findBy...And...".
+     * Optional<> is used because an active booking might not exist.
+     */
+    Optional<Booking> findByParkingSlotAndActiveTrue(ParkingSlot parkingSlot);
 
-        // Owner Side
-        List<Booking> findByParkingSlot_Owner_Email(String email);
+    // Finds all bookings made by a specific user (booking history)
+    List<Booking> findByUser(User user);
 
-        long countByParkingSlot_Owner_EmailAndActiveTrue(String email);
+    // ==========================================
+    // OWNER SIDE QUERIES
+    // ==========================================
+    
+    // Finds all bookings associated with slots owned by a specific email.
+    // The underscore '_' traverses relationships: ParkingSlot -> Owner -> Email
+    List<Booking> findByParkingSlot_Owner_Email(String email);
 
-        long countByParkingSlotAndVehicle_VehicleTypeAndActiveTrue(
-                        ParkingSlot parkingSlot,
-                        VehicleType vehicleType);
+    // Counts how many currently active bookings exist for an owner's slots
+    long countByParkingSlot_Owner_EmailAndActiveTrue(String email);
 
-        long countByParkingSlot_IdAndVehicle_VehicleTypeAndActiveTrue(
-                        Long slotId,
-                        com.smartparking.smart_parking_backend.model.VehicleType vehicleType);
+    // Counts active bookings for a specific slot AND a specific vehicle type
+    long countByParkingSlotAndVehicle_VehicleTypeAndActiveTrue(
+            ParkingSlot parkingSlot,
+            VehicleType vehicleType);
 
-        long countByParkingSlot_IdAndActiveTrue(Long slotId);
+    // Same as above but using the slot's ID instead of the whole slot object
+    long countByParkingSlot_IdAndVehicle_VehicleTypeAndActiveTrue(
+            Long slotId,
+            com.smartparking.smart_parking_backend.model.VehicleType vehicleType);
 
-        @Query("""
-                            SELECT COALESCE(SUM(b.totalPrice), 0)
-                            FROM Booking b
-                            WHERE b.parkingSlot.owner.email = :email
-                              AND b.active = false
-                        """)
-        double getTotalRevenueByOwnerEmail(@Param("email") String email);
+    // Counts all currently active bookings on a specific slot ID
+    long countByParkingSlot_IdAndActiveTrue(Long slotId);
 
-        // RAZORPAY / ADMIN
-        @Query("SELECT CASE WHEN SUM(b.totalPrice) IS NULL THEN 0.0 ELSE SUM(b.totalPrice) END FROM Booking b")
-        Double getTotalRevenue();
+    /**
+     * @Query annotation lets us write custom JPQL (Java Persistence Query Language) when a method name becomes too long or complex.
+     * This query calculates the total money earned (revenue) by an owner from completed (inactive) bookings.
+     * COALESCE ensures it returns 0 instead of 'null' if there are no bookings.
+     */
+    @Query("""
+            SELECT COALESCE(SUM(b.totalPrice), 0)
+            FROM Booking b
+            WHERE b.parkingSlot.owner.email = :email
+              AND b.active = false
+            """)
+    double getTotalRevenueByOwnerEmail(@Param("email") String email);
 
-        @Query("SELECT CASE WHEN SUM(b.totalPrice) IS NULL THEN 0.0 ELSE SUM(b.totalPrice) END FROM Booking b WHERE b.parkingSlot.owner.id = :ownerId")
-        Double getTotalRevenueByOwnerId(@Param("ownerId") Long ownerId);
+    // ==========================================
+    // RAZORPAY / ADMIN QUERIES
+    // ==========================================
 
-        @Query("SELECT CASE WHEN SUM(b.totalPrice) IS NULL THEN 0.0 ELSE SUM(b.totalPrice) END FROM Booking b WHERE b.parkingSlot.owner.id = :ownerId AND b.paymentStatus = 'COMPLETED'")
-        Double getTotalConfirmedRevenueByOwnerId(@Param("ownerId") Long ownerId);
+    // Calculates total revenue across the entire platform
+    @Query("SELECT CASE WHEN SUM(b.totalPrice) IS NULL THEN 0.0 ELSE SUM(b.totalPrice) END FROM Booking b")
+    Double getTotalRevenue();
 
-        // Razorpay support
-        Optional<Booking> findByRazorpayOrderId(String razorpayOrderId);
+    // Calculates all-time revenue for a specific owner by their ID
+    @Query("SELECT CASE WHEN SUM(b.totalPrice) IS NULL THEN 0.0 ELSE SUM(b.totalPrice) END FROM Booking b WHERE b.parkingSlot.owner.id = :ownerId")
+    Double getTotalRevenueByOwnerId(@Param("ownerId") Long ownerId);
+
+    // Calculates revenue but ONLY counts bookings where the paymentStatus is absolutely 'COMPLETED'
+    @Query("SELECT CASE WHEN SUM(b.totalPrice) IS NULL THEN 0.0 ELSE SUM(b.totalPrice) END FROM Booking b WHERE b.parkingSlot.owner.id = :ownerId AND b.paymentStatus = 'COMPLETED'")
+    Double getTotalConfirmedRevenueByOwnerId(@Param("ownerId") Long ownerId);
+
+    // Razorpay support: Finds a booking using the unique Order ID generated by the Razorpay payment gateway
+    Optional<Booking> findByRazorpayOrderId(String razorpayOrderId);
 }

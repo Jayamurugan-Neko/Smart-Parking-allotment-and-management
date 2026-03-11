@@ -1,5 +1,9 @@
-/* SlotCard Component Styles */
-
+/**
+ * SlotCard.css
+ * 
+ * Purpose: Styling for the individual parking result cards shown to normal Users.
+ * Defines the expand/collapse border animation, availability badging, and layout.
+ */
 .slot-card {
   background: var(--card-bg);
   border-radius: 8px;

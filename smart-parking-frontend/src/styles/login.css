@@ -1,3 +1,10 @@
+/**
+ * login.css
+ * 
+ * Purpose: Styling for the Authentication pages (Login and Signup).
+ * Displays a centered card in the middle of the screen, with custom 
+ * input highlights and a colorful gradient submit button.
+ */
 .login-container {
   height: 100vh;
   display: flex;

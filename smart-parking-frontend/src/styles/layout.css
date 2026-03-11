@@ -1,3 +1,10 @@
+/**
+ * layout.css
+ * 
+ * Purpose: Styling for structural layout components, primarily the Main Navbar.
+ * It contains the desktop navigation links, the mobile "hamburger" menu animations,
+ * and the specific "hover-to-reveal" dynamic navbar logic used on the Map page.
+ */
 .navbar {
   background: #1f2937;
   color: white;

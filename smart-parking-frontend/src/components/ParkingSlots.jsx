@@ -6,6 +6,12 @@ import {
   getSlotAvailability
 } from "../services/api";
 
+/**
+ * ParkingSlots Component
+ * 
+ * Purpose: An older layout component for the interactive map (now mostly replaced 
+ * by the more modern SlotsPage). It coordinates the map and the sidebar.
+ */
 function ParkingSlots() {
   const [slots, setSlots] = useState([]);
   const [selectedSlot, setSelectedSlot] = useState(null);

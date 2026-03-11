@@ -1,5 +1,10 @@
-/* BookingsPage Styles */
-
+/**
+ * BookingsPage.css
+ * 
+ * Purpose: Styling for the Bookings history page for both Users and Owners.
+ * Defines the layout for the individual booking cards, the colorful status badges 
+ * (Active vs Completed), and the responsive payment/QR code section.
+ */
 .bookings-page-container {
   padding: clamp(16px, 4vw, 32px) clamp(16px, 4vw, 20px);
   min-height: 100vh;

@@ -1,9 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 
-// Props:
-// - onSearch(query)
-// - suggestions: array of suggestion strings (optional)
-// - userKey: string used to persist per-user search history (optional)
+/**
+ * SearchBar Component
+ * 
+ * Purpose: A custom search input field that remembers what the user searched for previously.
+ * It shows a dropdown of past searches to act as autocomplete suggestions.
+ * 
+ * Props:
+ * - onSearch(query): Function called when the user hits search.
+ * - suggestions: array of suggestion strings for the dropdown (optional).
+ * - userKey: string used to save the search history specifically for this user (optional).
+ */
 function SearchBar({ onSearch, suggestions = [], userKey }) {
   const [query, setQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);

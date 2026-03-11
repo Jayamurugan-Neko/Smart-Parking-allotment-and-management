@@ -5,7 +5,16 @@ import QRCodeModal from "../components/QRCodeModal";
 import "../styles/BookingsPage.css";
 import "../styles/common.css";
 import ParkingLoader from "../components/ParkingLoader";
+import ParkingLoader from "../components/ParkingLoader";
 
+/**
+ * BookingsPage Component
+ * 
+ * Purpose: Shows a history of parking reservations.
+ * - For a normal USER: Shows places they have parked or are currently parked.
+ * - For an OWNER: Shows people who are currently parked in their slots or have parked there in the past.
+ * Also handles ending active bookings and triggering payment features (Razorpay/QR).
+ */
 function BookingsPage() {
     const [bookings, setBookings] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -28,6 +37,10 @@ function BookingsPage() {
         }
     }, []);
 
+    // -------- API FUNCTIONS --------
+
+    // Smart fetching: If the user is an OWNER, ask the backend for all bookings inside their slots.
+    // Otherwise, just ask for the specific bookings that this normal USER made.
     const fetchBookings = useCallback(() => {
         if (!userRole) {
             setLoading(false);
@@ -47,7 +60,9 @@ function BookingsPage() {
         fetchBookings();
     }, [fetchBookings]);
 
-    // Function for handling "End Booking"
+    // -------- ACTION HANDLERS --------
+
+    // Stops the parking clock and calculates the final bill based on how many hours they stayed.
     const handleEndBooking = async (bookingId) => {
         // Confirmation is key to prevent accidental clicks
         if (!window.confirm("Are you sure you want to end this booking?")) return;
@@ -62,7 +77,9 @@ function BookingsPage() {
         }
     };
 
-    // Function to open the Payment Modal (the popup)
+    // Opens the Payment Popup. 
+    // If you are an end-user, it opens Razorpay UI.
+    // If you are an owner, it opens a QR code block for the user to scan.
     const handlePayClick = (booking) => {
         // Check if the slot has a UPI ID configured (needed for payment)
         if (booking.slotUpiId) {
@@ -91,6 +108,7 @@ function BookingsPage() {
         setQrBooking(null);
     };
 
+    // -------- UI RENDER --------
     return (
         <div className="bookings-page-container">
             <h2 className="bookings-page-title">

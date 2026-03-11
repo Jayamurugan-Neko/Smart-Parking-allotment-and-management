@@ -1,3 +1,12 @@
+/**
+ * admin.css
+ * 
+ * Purpose: Styling specifically for the Admin Dashboard.
+ * Includes layout for the left sidebar, the responsive stats grid, 
+ * the user management tables, and the slot verification cards (approve/reject).
+ */
+
+/* Main Container Layout */
 .admin-container {
   display: flex;
   min-height: 100vh;

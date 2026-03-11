@@ -1,5 +1,13 @@
 import BookingForm from "./BookingForm";
 
+/**
+ * SlotSidebar Component
+ * 
+ * Purpose: A slide-out panel used on the SlotsPage map.
+ * When a user clicks a parking marker on the map, this sidebar opens up to show
+ * live availability (How many Cars/Bikes/Trucks can fit right now)
+ * and displays the BookingForm so the user can reserve it.
+ */
 function SlotSidebar({ slot, availability }) {
   if (!availability) {
     return (

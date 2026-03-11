@@ -1,4 +1,9 @@
-/* 3D Parking Loader Container */
+/**
+ * ParkingLoader.css
+ * 
+ * Purpose: Advanced CSS animations for the 3D spinning "P" (Parking) loading sign.
+ * Uses CSS transforms (rotateY, translateZ) and keyframes to create a 3D effect.
+ */
 .parking-loader-container {
     display: flex;
     flex-direction: column;

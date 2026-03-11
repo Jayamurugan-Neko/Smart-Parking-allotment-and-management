@@ -2,6 +2,14 @@ import React from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import '../styles/PaymentModal.css'; // Reuse payment modal styles for consistency
 
+/**
+ * QRCodeModal Component
+ * 
+ * Purpose: A popup that appears for an Owner when a user is ready to pay.
+ * It generates a dynamic UPI QR Code containing the Owner's UPI ID and the exact bill amount.
+ * The owner shows their phone screen to the user, the user scans it with GPay/PhonePe, and pays.
+ * The owner then manually clicks a button to confirm they received the money.
+ */
 const QRCodeModal = ({ booking, onClose, onPaymentSuccess }) => {
     // Construct UPI Intent Link
     // upi://pay?pa=UPI_ID&pn=NAME&am=AMOUNT&cu=INR&tn=NOTE

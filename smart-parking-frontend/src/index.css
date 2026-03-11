@@ -1,4 +1,11 @@
-@Import "./styles/global.css";
+/* 
+ * index.css
+ * 
+ * Purpose: The absolute foundation of styling for the app.
+ * This file is loaded first and sets up the default fonts for the entire application
+ * to give it a clean, modern look (using standard macOS/Windows web fonts).
+ */
+@import "./styles/global.css";
 
 body {
   margin: 0;

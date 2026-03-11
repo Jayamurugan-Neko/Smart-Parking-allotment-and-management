@@ -2,6 +2,14 @@ import { useState } from "react";
 import { bookSlot } from "../services/api";
 import "../App.css"; // Ensure styles are loaded
 
+/**
+ * BookingForm Component
+ * 
+ * Purpose: A multi-step form where a user actually books a parking slot.
+ * Step 1: User selects vehicle type (Car, Bike, Truck) and sees live availability.
+ * Step 2: User enters their specific vehicle number and model.
+ * Finally: Confirms the booking with the backend server.
+ */
 function BookingForm({ slot, availability }) {
   const [vehicleType, setVehicleType] = useState(null);
   const [vehicleNumber, setVehicleNumber] = useState("");
@@ -10,6 +18,9 @@ function BookingForm({ slot, availability }) {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  // -------- ACTION HANDLERS --------
+
+  // Collects the form data and sends it to the backend to create the booking in the database.
   const handleBooking = () => {
     if (!vehicleType || !vehicleNumber || !vehicleModel) {
       setMessage("Please fill all required fields.");
@@ -40,6 +51,9 @@ function BookingForm({ slot, availability }) {
       .finally(() => setLoading(false));
   };
 
+  // -------- UI HELPERS --------
+
+  // Helper function to figure out how many free spots are left for a specific vehicle type.
   const getCapacity = (type) => {
     switch (type) {
       case "CAR": return { total: availability.carCapacity, free: availability.carAvailable };
@@ -49,6 +63,8 @@ function BookingForm({ slot, availability }) {
     }
   };
 
+  // Renders a clickable button for a vehicle type (e.g. "Car 🚗"). 
+  // Disables the button visually and functionally if the spot is FULL.
   const renderTypeOption = (type, label, icon) => {
     const { free } = getCapacity(type);
     const isDisabled = free === 0;

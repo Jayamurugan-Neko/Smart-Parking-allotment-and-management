@@ -5,6 +5,15 @@ import "../styles/OwnerDashboard.css";
 import "../styles/common.css";
 import ParkingLoader from "../components/ParkingLoader";
 
+/**
+ * OwnerDashboard Component
+ * 
+ * Purpose: This dashboard is specifically for users with the "OWNER" role.
+ * Owners use this page to:
+ * 1. Register new parking slots they want to rent out.
+ * 2. View a summary of their earnings and total capacities.
+ * 3. See a list of all their registered slots.
+ */
 function OwnerDashboard() {
   const [user] = useState(() => {
     try {
@@ -38,7 +47,9 @@ function OwnerDashboard() {
     upiId: ""
   });
 
-  // Fetch slots from the backend API
+  // -------- API FUNCTIONS --------
+
+  // Fetch all slots owned by this specific owner from the backend API
   const loadSlots = () => {
     setLoading(true);
     getOwnerSlots()
@@ -53,6 +64,8 @@ function OwnerDashboard() {
     getOwnerSummary().then(res => setSummary(res.data)).catch(() => { });
   };
 
+  // -------- INITIAL LOAD --------
+  
   // Load data when the component mounts (starts)
   useEffect(() => {
     if (!user) return;
@@ -74,6 +87,7 @@ function OwnerDashboard() {
     );
   }
 
+  // Takes the filled-out form data and sends it to the backend to create a new slot
   const handleCreateSlot = async () => {
     try {
       const res = await createSlot(newSlot);

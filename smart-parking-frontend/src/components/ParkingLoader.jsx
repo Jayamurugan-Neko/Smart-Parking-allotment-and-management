@@ -1,6 +1,12 @@
 import React from 'react';
 import '../styles/ParkingLoader.css';
 
+/**
+ * ParkingLoader Component
+ * 
+ * Purpose: A custom 3D spinning "P" (Parking) sign used as a visual loading animation.
+ * Shown whenever the app is waiting for data from the backend (like fetching slots).
+ */
 const ParkingLoader = ({ message = "Finding best spot..." }) => {
     return (
         <div className="parking-loader-container">

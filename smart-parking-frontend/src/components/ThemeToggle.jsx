@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+/**
+ * ThemeToggle Component
+ * 
+ * Purpose: A floating button that lets users switch between Light and Dark mode.
+ * It remembers their choice in the browser's localStorage so it stays consistent
+ * even if they refresh the page. It also listens to the Operating System's default theme.
+ */
 const storageKey = 'theme-preference';
 
 const getColorPreference = () => {

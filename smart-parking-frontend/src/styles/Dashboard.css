@@ -1,5 +1,10 @@
-/* Dashboard Page Styles */
-
+/**
+ * Dashboard.css
+ * 
+ * Purpose: Styling specifically for the normal User Dashboard.
+ * Defines the layout for the user's profile information cards, the list of 
+ * their registered vehicles, and responsive rows that stack nicely on mobile.
+ */
 .dashboard-container {
   padding: clamp(16px, 4vw, 24px);
   width: 100%;

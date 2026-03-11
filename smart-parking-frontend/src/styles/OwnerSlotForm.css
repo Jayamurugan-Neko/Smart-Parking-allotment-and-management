@@ -1,4 +1,10 @@
-/* OwnerSlotForm Component*/
+/**
+ * OwnerSlotForm.css
+ * 
+ * Purpose: Styling for the form where Owners update their parking slots' capacity/price.
+ * Includes layout for the compact input grids and the colorful action buttons (Save/Delete).
+ */
+
 /* Modal Overlay */
 .modal-overlay {
   position: fixed;

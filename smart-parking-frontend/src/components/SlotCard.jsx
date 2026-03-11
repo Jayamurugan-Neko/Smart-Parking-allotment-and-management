@@ -1,15 +1,26 @@
 import { useState, useEffect } from "react";
 import "../styles/SlotCard.css";
 
+/**
+ * SlotCard Component
+ * 
+ * Purpose: Displays a compact card summarizing a parking slot (Location, Capacity, Price).
+ * Used mostly in the sidebar of the SlotsPage to show search results.
+ * It can expand to show more details or trigger the booking dialog.
+ */
 function SlotCard({ slot, onBook, role }) {
   const [expanded, setExpanded] = useState(false);
 
+  // -------- EVENT LISTENERS --------
+  // Allows other components (like clicking a pin on the map) to trigger an event that magically 
+  // expands this specific card in the sidebar if its ID matches.
   useEffect(() => {
     // Listen for expand-slot-card event to expand this card if slotId matches
     const handler = (e) => {
       if (e.detail && e.detail.slotId === slot.id) setExpanded(true);
     };
     window.addEventListener('expand-slot-card', handler);
+    // Cleanup the listener when the component is removed
     return () => window.removeEventListener('expand-slot-card', handler);
   }, [slot.id]);
 

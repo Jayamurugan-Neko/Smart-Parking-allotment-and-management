@@ -4,6 +4,16 @@ import "../styles/Dashboard.css";
 import "../styles/common.css";
 import ParkingLoader from "../components/ParkingLoader";
 
+/**
+ * Dashboard Component
+ * 
+ * Purpose: This page serves as the control center for a normal "USER". 
+ * Here, they can:
+ * 1. View and edit their personal profile (Name, Address, Phone, etc.).
+ * 2. Register their vehicles (Car, Bike, Truck) to their account.
+ * 3. Delete existing vehicles.
+ * 4. See a shortcut to their booking history.
+ */
 function Dashboard() {
   const [vehicles, setVehicles] = useState([]);
   const [user, setUser] = useState(null);
@@ -32,11 +42,17 @@ function Dashboard() {
     ownerName: ""
   });
 
+  // -------- INITIAL LOAD --------
+  // useEffect runs automatically when this component is first drawn on the screen ([] means exactly once).
+  // It triggers the functions to fetch the latest profile data and vehicles from the backend database.
   useEffect(() => {
     loadUserProfile();
     loadVehicles();
   }, []);
 
+  // -------- PROFILE FUNCTIONS --------
+
+  // Fetches the user's personal details from the backend
   const loadUserProfile = async () => {
     try {
       setLoading(true);
@@ -109,6 +125,7 @@ function Dashboard() {
     }));
   };
 
+  // Saves the edited profile details back to the backend
   const handleSave = async () => {
     try {
       setMessage("");
@@ -154,6 +171,9 @@ function Dashboard() {
     setMessage("");
   };
 
+  // -------- VEHICLE FUNCTIONS --------
+
+  // Fetches a list of all vehicles owned by this user
   const loadVehicles = async () => {
     try {
       const res = await getMyVehicles();
@@ -172,6 +192,7 @@ function Dashboard() {
     }));
   };
 
+  // Registers a new vehicle securely to this user's account
   const handleAddVehicle = async () => {
     if (!vehicleFormData.vehicleNumber || !vehicleFormData.vehicleType) {
       setVehicleMessage("Vehicle number and type are required");
@@ -247,6 +268,9 @@ function Dashboard() {
   };
 
 
+  // -------- UI RENDER --------
+
+  // Show a spinning loader component while we wait for the backend to reply with profile data
   if (loading) {
     return (
       <div className="dashboard-container" style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

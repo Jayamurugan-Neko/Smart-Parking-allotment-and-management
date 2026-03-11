@@ -1,3 +1,9 @@
+/**
+ * PaymentModal.css
+ * 
+ * Purpose: Styling for the secure Payment modal popup and the Owner UPI QR Code popup.
+ * Handles the dark blurred background overlay and the centered floating white card.
+ */
 .payment-modal-overlay {
     position: fixed;
     top: 0;

@@ -3,6 +3,17 @@ import { getAdminStats, getOwnerPayouts, processPayout, getPendingSlots, verifyS
 import "../styles/admin.css"; // We will create this next
 import ParkingLoader from "../components/ParkingLoader";
 
+/**
+ * AdminDashboard Component
+ * 
+ * Purpose: This is the highest-level control panel in the system, exclusively for the "ADMIN" role.
+ * Admins use this dashboard to oversee the entire platform:
+ * 1. View global system stats (Total Revenue, Active Users, etc.).
+ * 2. Process payments (payouts) to slot owners.
+ * 3. Verify or reject newly registered parking slots.
+ * 4. Manage user accounts (including removing users).
+ * 5. Update system settings (like the Admin's central UPI ID).
+ */
 function AdminDashboard() {
     const [activeTab, setActiveTab] = useState("overview");
     const [stats, setStats] = useState(null);
@@ -18,6 +29,10 @@ function AdminDashboard() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeTab]);
 
+    // -------- API FUNCTIONS --------
+
+    // Depending on which tab is actually active on the screen, 
+    // this function fetches the matching data from the backend.
     const fetchData = async () => {
         setLoading(true);
         try {
@@ -44,6 +59,9 @@ function AdminDashboard() {
         }
     };
 
+    // -------- ACTION HANDLERS --------
+
+    // Called when the Admin clicks "Pay Now" to send earnings to a slot owner.
     const handlePay = async (owner) => {
         if (window.confirm(`Confirm payout of ₹${owner.pendingAmount} to ${owner.ownerName}?`)) {
             try {
@@ -56,6 +74,8 @@ function AdminDashboard() {
         }
     };
 
+    // Approves or rejects a new parking slot submitted by an owner.
+    // If rejected, prompts the admin to enter a reason.
     const handleVerify = async (slotId, status) => {
         let comments = "";
         if (status === "REJECTED") {
@@ -71,6 +91,7 @@ function AdminDashboard() {
             alert("Action Failed");
         }
     };
+    // Updates the central UPI ID where the Admin receives all platform payments.
     const handleUpdateUpi = async () => {
         try {
             await updateAdminProfile(adminProfile.upiId);
@@ -85,6 +106,7 @@ function AdminDashboard() {
         }
     };
 
+    // Permanently removes a user (User or Owner) from the system. Admin accounts cannot be deleted here.
     const handleDeleteUser = async (userId, customMessage) => {
         if (window.confirm(customMessage || "Are you sure you want to remove this user from the system?")) {
             try {

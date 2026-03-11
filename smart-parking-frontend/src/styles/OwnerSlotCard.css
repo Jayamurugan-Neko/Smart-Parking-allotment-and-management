@@ -1,5 +1,9 @@
-/* OwnerSlotCard Component Styles */
-
+/**
+ * OwnerSlotCard.css
+ * 
+ * Purpose: Styling for the individual Slot Cards shown to the Owner.
+ * Manages the layout of the location headers and the small capacity badges.
+ */
 .owner-slot-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);

@@ -1,3 +1,8 @@
+/**
+ * SlotSidebar.css
+ * 
+ * Purpose: Basic fallback styling used by older versions of the Map sidebar.
+ */
 .slot-sidebar {
   width: 300px;
   padding: 16px;

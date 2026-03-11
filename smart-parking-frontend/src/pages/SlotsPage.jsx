@@ -8,7 +8,15 @@ import "../styles/SlotsPage.css";
 import "../styles/common.css";
 import ParkingLoader from "../components/ParkingLoader";
 
+import ParkingLoader from "../components/ParkingLoader";
 
+/**
+ * SlotsPage Component
+ * 
+ * Purpose: This is the interactive map page where users find and book parking spots!
+ * It combines a map view (`ParkingMap`) with a sliding menu (`SlotSidebar`),
+ * a search bar, and dynamic slot availability checking.
+ */
 function SlotsPage() {
   const [allSlots, setAllSlots] = useState([]);
   const [slots, setSlots] = useState([]);
@@ -23,7 +31,8 @@ function SlotsPage() {
   let user = null, role = 'user';
   try { user = JSON.parse(localStorage.getItem('user')); role = user?.role || 'user'; } catch { }
 
-  // Load all slots on mount
+  // -------- INITIAL LOAD --------
+  // Fetch every available parking slot from the backend as soon as the page loads.
   useEffect(() => {
     fetchSlotsForMap()
       .then(data => {
@@ -34,7 +43,10 @@ function SlotsPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  // Refresh availability on booking update (same logic as before)
+  // -------- EVENT LISTENERS --------
+  // Listens for custom global events (like someone completing a booking).
+  // This allows the page to silently update the remaining slot capacity in real-time
+  // without jumping or forcing a hard page refresh.
   useEffect(() => {
     const refreshAvailability = async () => {
       if (selectedSlot) {
@@ -58,7 +70,10 @@ function SlotsPage() {
     };
   }, [selectedSlot]);
 
-  // Slot click handler
+  // -------- ACTION HANDLERS --------
+
+  // Triggered when a user clicks a parking icon on the map or a card in the menu.
+  // It fetches the absolute latest availability (how many cars can fit right now) from the backend.
   const handleSlotSelect = async (slot) => {
     setSelectedSlot(slot);
     setRightSidebarSlot(slot);
@@ -74,6 +89,7 @@ function SlotsPage() {
     }
   };
 
+  // Filters the map and list to only show slots matching the city/location typed in.
   const handleSearch = (query) => {
     const q = query.trim().toLowerCase();
     if (!q) {
@@ -99,7 +115,9 @@ function SlotsPage() {
     );
   }
 
-  /* Logic for Menu Items based on Role */
+  // -------- UI RENDER --------
+
+  /* Menu Configuration depending on who is looking at the page */
   let menuItems;
   if (role === 'owner') {
     menuItems = [

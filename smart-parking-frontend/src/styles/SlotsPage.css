@@ -1,5 +1,10 @@
-/* SlotsPage Styles - Google Maps Inspired (Floating Layout) */
-
+/**
+ * SlotsPage.css
+ * 
+ * Purpose: Complex styling for the interactive Map page (Google Maps inspired).
+ * Handles the absolute full-screen positioning of the map container, the floating 
+ * search bar with its expand/collapse CSS animations, and the slide-out sidebars.
+ */
 .slots-page-container {
   width: 100%;
   /* Changed from 100vw to prevent scrollbar issues */

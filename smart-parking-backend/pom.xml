@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  =========================================================
+  pom.xml
+  Purpose: The core configuration file for Maven, the build tool.
+  It manages all the external libraries (dependencies) that our 
+  Spring Boot backend needs to function (like security, database drivers, etc.).
+  ========================================================= 
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0

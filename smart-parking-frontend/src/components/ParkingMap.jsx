@@ -3,9 +3,17 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect, useState } from "react";
 
+/**
+ * ParkingMap Component (Wrapper & Inner)
+ * 
+ * Purpose: Renders the interactive map shown on the SlotsPage using the Leaflet library.
+ * It displays:
+ * 1. Markers (Green for Available, Red for Full) for every parking slot.
+ * 2. A "Locate Me" button to find the user's current GPS location.
+ * 3. Listens for events to automatically center the map on a specific slot when clicked in the sidebar.
+ */
 
-
-// Listen for center events globally and move map
+// Listen for center events globally and move map securely
 function useCenterOnSlot(mapInstance) {
   useEffect(() => {
     if (!mapInstance) return;
@@ -62,6 +70,9 @@ function ParkingMapInner({ slots, onSlotSelect, mapInstance, setMapInstance }) {
   const [userLocation, setUserLocation] = useState(null);
   const [locationLoading, setLocationLoading] = useState(false);
 
+  // -------- ACTION HANDLERS --------
+
+  // Asks the browser for the user's current GPS coordinates and flies the map there.
   const handleLocateMe = () => {
     // If map isn't ready, we can't fly there, but we can still try to get location if we want to update state.
     // But since we want to flyTo, we need map instance.

@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
 import '../styles/PaymentModal.css';
 
+/**
+ * PaymentModal Component
+ * 
+ * Purpose: A secure popup that appears when a normal User wants to pay their parking bill.
+ * It integrates directly with the Razorpay payment gateway to process the transaction.
+ */
 const PaymentModal = ({ booking, onClose, onPaymentSuccess }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
+    // -------- ACTION HANDLERS --------
+
+    // The main function that talks to Razorpay.
+    // 1. Creates a payment order on our secure Java backend.
+    // 2. Opens the Razorpay checkout window for the user to enter card/UPI details.
+    // 3. Very Important: Verifies the payment signature locally and on the backend after success.
     const handleRazorpayPayment = async () => {
         setLoading(true);
         setError('');

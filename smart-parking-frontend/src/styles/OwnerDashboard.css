@@ -1,5 +1,10 @@
-/* Owner Dashboard Styles */
-
+/**
+ * OwnerDashboard.css
+ * 
+ * Purpose: Styling for the Owner Dashboard view.
+ * Includes the top summary grid (earnings/slots), the "Create Slot" form layout,
+ * and the responsive 2-column grid that displays all the Owner's slot cards.
+ */
 .owner-dashboard-container {
   min-height: 100vh;
   background: var(--bg-color);

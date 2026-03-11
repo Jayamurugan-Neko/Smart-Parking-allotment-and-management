@@ -1,5 +1,11 @@
 import BookingForm from "../components/BookingForm";
 
+/**
+ * BookingPage Component
+ * 
+ * Purpose: A simple wrapper page that displays the "Book Parking Slot" title 
+ * and then loads the actual interactive BookingForm component.
+ */
 function BookingPage()
 {
     return (

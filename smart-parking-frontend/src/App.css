@@ -1,6 +1,14 @@
 /* @import "https://unpkg.com/open-props/easings.min.css";  Removed due to network errors */
 
-/* Global "Premium" Styles */
+/**
+ * App.css
+ * 
+ * Purpose: The main stylesheet defining our "Premium" Design System.
+ * It holds the core color palettes (Light & Dark mode variables), 
+ * the complex Dark Mode Sun/Moon animations, and global rules for Buttons/Inputs.
+ */
+
+/* Global "Premium" CSS Variables (:root means applied everywhere) */
 :root {
   /* Modern, softer palette - Light Mode (Default) */
   --primary-color: #4F46E5;
@@ -53,7 +61,11 @@
   --icon-fill-hover: #6366f1;
 }
 
-/* Theme Toggle Styles */
+/* =========================================================================
+   Theme Toggle Styles & Animations
+   This section handles the complex CSS needed for the interactive Sun/Moon 
+   Dark mode button floating in the bottom corner of the screen.
+   ========================================================================= */
 .theme-toggle {
   background: none;
   border: none;
@@ -67,8 +79,7 @@
   -webkit-tap-highlight-color: transparent;
   outline-offset: 5px;
 
-  /* Position fixed bottom-right or top-right? User asked for "in every page". 
-     Let's put it fixed bottom-right for easy access without interfering with nav. */
+  /* Position fixed bottom-right for easy access on all pages */
   position: fixed;
   bottom: 24px;
   right: 24px;

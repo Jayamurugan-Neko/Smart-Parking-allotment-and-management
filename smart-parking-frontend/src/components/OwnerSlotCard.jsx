@@ -1,6 +1,13 @@
 import OwnerSlotForm from "./OwnerSlotForm";
 import "../styles/OwnerSlotCard.css";
 
+/**
+ * OwnerSlotCard Component
+ * 
+ * Purpose: A visual card shown on the Owner Dashboard representing a single parking area.
+ * It displays basic info (Location, Capacity) and importantly, embeds the `OwnerSlotForm` 
+ * so the owner can edit pricing/capacity right inside the card.
+ */
 function OwnerSlotCard({ slot, refreshSlots }) {
   return (
     <div className="owner-slot-card">
